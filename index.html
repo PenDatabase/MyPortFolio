@@ -7,234 +7,387 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'space': ['Space Grotesk', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
                         'inter': ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        'navy': '#0f172a',
-                        'off-white': '#f8fafc',
-                        'cyan': '#22d3ee',
-                        'warm-yellow': '#facc15',
-                        'soft-purple': '#d8b4fe',
+                        'electric': '#00ff41',
+                        'neon-blue': '#0066ff',
+                        'hot-pink': '#ff0066',
+                        'cyber-yellow': '#ffff00',
+                        'deep-purple': '#6600cc',
                     },
                     animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 3s ease-in-out infinite',
-                        'slide-up': 'slideUp 0.8s ease-out forwards',
-                        'slide-in-left': 'slideInLeft 0.8s ease-out forwards',
-                        'slide-in-right': 'slideInRight 0.8s ease-out forwards',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
+                        'slide-diagonal': 'slide-diagonal 0.8s ease-out forwards',
+                        'text-reveal': 'text-reveal 1.2s ease-out forwards',
+                        'morph': 'morph 6s ease-in-out infinite',
+                        'rotate-slow': 'rotate 20s linear infinite',
+                        'bounce-x': 'bounce-x 2s ease-in-out infinite',
                     },
                     keyframes: {
                         float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-30px) rotate(180deg)' },
                         },
-                        slideUp: {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        'glow-pulse': {
+                            '0%': { boxShadow: '0 0 20px rgba(0, 255, 65, 0.5)', filter: 'brightness(1)' },
+                            '100%': { boxShadow: '0 0 40px rgba(0, 255, 65, 0.8)', filter: 'brightness(1.2)' },
                         },
-                        slideInLeft: {
-                            '0%': { opacity: '0', transform: 'translateX(-30px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        'slide-diagonal': {
+                            '0%': { opacity: '0', transform: 'translate(-100px, 100px)' },
+                            '100%': { opacity: '1', transform: 'translate(0, 0)' },
                         },
-                        slideInRight: {
-                            '0%': { opacity: '0', transform: 'translateX(30px)' },
-                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        'text-reveal': {
+                            '0%': { opacity: '0', transform: 'translateY(50px)', filter: 'blur(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)', filter: 'blur(0)' },
                         },
-                        glow: {
-                            '0%': { boxShadow: '0 0 20px rgba(34, 211, 238, 0.3)' },
-                            '100%': { boxShadow: '0 0 40px rgba(34, 211, 238, 0.6)' },
-                        }
+                        morph: {
+                            '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+                            '50%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+                        },
+                        'bounce-x': {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '50%': { transform: 'translateX(20px)' },
+                        },
                     }
                 }
             }
         }
     </script>
     <style>
-        .geometric-bg {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        body {
+            background: #000000;
+            overflow-x: hidden;
+        }
+        
+        .cyber-grid {
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 20s linear infinite;
+        }
+        
+        @keyframes grid-move {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
+        }
+        
+        .text-glitch {
+            position: relative;
+        }
+        
+        .text-glitch::before,
+        .text-glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .text-glitch::before {
+            animation: glitch-1 0.5s infinite linear alternate-reverse;
+            color: #ff0066;
+            z-index: -1;
+        }
+        
+        .text-glitch::after {
+            animation: glitch-2 0.5s infinite linear alternate-reverse;
+            color: #0066ff;
+            z-index: -2;
+        }
+        
+        @keyframes glitch-1 {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            40% { transform: translateX(-2px); }
+            60% { transform: translateX(2px); }
+            80% { transform: translateX(2px); }
+            100% { transform: translateX(0); }
+        }
+        
+        @keyframes glitch-2 {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(2px); }
+            40% { transform: translateX(2px); }
+            60% { transform: translateX(-2px); }
+            80% { transform: translateX(-2px); }
+            100% { transform: translateX(0); }
+        }
+        
+        .neon-border {
+            border: 2px solid #00ff41;
+            box-shadow: 
+                0 0 10px #00ff41,
+                inset 0 0 10px rgba(0, 255, 65, 0.1);
+        }
+        
+        .holographic {
+            background: linear-gradient(45deg, 
+                rgba(0, 255, 65, 0.1) 0%,
+                rgba(0, 102, 255, 0.1) 25%,
+                rgba(255, 0, 102, 0.1) 50%,
+                rgba(255, 255, 0, 0.1) 75%,
+                rgba(102, 0, 204, 0.1) 100%
+            );
+            backdrop-filter: blur(10px);
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .perspective-card {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .perspective-card:hover .card-inner {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .scan-line {
             position: relative;
             overflow: hidden;
         }
         
-        .geometric-bg::before {
+        .scan-line::after {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322d3ee' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
-        .floating-shapes {
-            position: absolute;
+            left: -100%;
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(0, 255, 65, 0.4), 
+                transparent
+            );
+            animation: scan 3s infinite;
         }
-
-        .shape {
+        
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .magnetic-field {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .magnetic-field:hover {
+            transform: translate(10px, -10px);
+            box-shadow: -10px 10px 30px rgba(0, 255, 65, 0.3);
+        }
+        
+        .terminal-text {
+            font-family: 'JetBrains Mono', monospace;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+        
+        .data-stream {
             position: absolute;
-            opacity: 0.1;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: rgba(0, 255, 65, 0.3);
+            white-space: nowrap;
+            animation: stream 15s linear infinite;
         }
-
-        .shape-1 {
-            top: 10%;
-            left: 10%;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(45deg, #22d3ee, #facc15);
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            animation: float 8s ease-in-out infinite;
-        }
-
-        .shape-2 {
-            top: 60%;
-            right: 10%;
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(45deg, #d8b4fe, #22d3ee);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite reverse;
-        }
-
-        .shape-3 {
-            bottom: 20%;
-            left: 30%;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, #facc15, #d8b4fe);
-            border-radius: 20px;
-            transform: rotate(45deg);
-            animation: float 10s ease-in-out infinite;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .skill-orb {
-            background: radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.8), rgba(34, 211, 238, 0.2));
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(34, 211, 238, 0.3);
-        }
-
-        .project-card {
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-        }
-
-        .magnetic-btn {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .magnetic-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(34, 211, 238, 0.3);
+        
+        @keyframes stream {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
         }
     </style>
 </head>
-<body class="font-inter text-off-white bg-navy" x-data="{ darkMode: true, mobileMenuOpen: false }">
+<body class="font-inter text-white bg-black relative" x-data="{ mobileMenuOpen: false, currentSection: 'hero' }">
     
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 glass-card" x-data="{ scrolled: false }" 
+    <!-- Cyber Grid Background -->
+    <div class="cyber-grid fixed inset-0 z-0"></div>
+    
+    <!-- Data Streams -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="data-stream" style="top: 10%; animation-delay: 0s;">DJANGO_VERSION=4.2.7 PYTHON_3.11 POSTGRESQL_15 WEBSOCKET_ACTIVE</div>
+        <div class="data-stream" style="top: 30%; animation-delay: 2s;">QUANTUM_LEAP_AGENCY STARTUP_MODE=ACTIVE USER_AUTH=VERIFIED</div>
+        <div class="data-stream" style="top: 50%; animation-delay: 4s;">PROJECT_COUNT=6+ EXPERIENCE_YEARS=2+ COFFEE_CONSUMED=∞</div>
+        <div class="data-stream" style="top: 70%; animation-delay: 6s;">GITHUB_COMMITS=DAILY API_ENDPOINTS=OPTIMIZED DATABASE_QUERIES=LIGHTNING_FAST</div>
+        <div class="data-stream" style="top: 90%; animation-delay: 8s;">STATUS=BUILDING_THE_FUTURE MOTIVATION=MAXIMUM CREATIVITY=UNLIMITED</div>
+    </div>
+
+    <!-- Futuristic Navigation -->
+    <nav class="fixed top-0 w-full z-50 mix-blend-difference" x-data="{ scrolled: false }" 
          @scroll.window="scrolled = window.pageYOffset > 20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
-                <div class="font-space font-bold text-xl text-cyan">
-                    <span class="animate-glow">DE</span>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <!-- Logo -->
+                <div class="terminal-text text-2xl font-mono font-bold">
+                    <span class="text-glitch" data-text="<DE/>">&lt;DE/&gt;</span>
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#hero" class="hover:text-cyan transition-colors duration-300">Home</a>
-                    <a href="#about" class="hover:text-cyan transition-colors duration-300">About</a>
-                    <a href="#skills" class="hover:text-cyan transition-colors duration-300">Skills</a>
-                    <a href="#projects" class="hover:text-cyan transition-colors duration-300">Projects</a>
-                    <a href="#startup" class="hover:text-cyan transition-colors duration-300">Startup</a>
-                    <a href="#contact" class="hover:text-cyan transition-colors duration-300">Contact</a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#hero" class="px-4 py-2 font-mono text-sm hover:text-electric transition-colors duration-300 hover:bg-electric hover:bg-opacity-10 rounded border border-transparent hover:border-electric">[HOME]</a>
+                    <a href="#about" class="px-4 py-2 font-mono text-sm hover:text-electric transition-colors duration-300 hover:bg-electric hover:bg-opacity-10 rounded border border-transparent hover:border-electric">[ABOUT]</a>
+                    <a href="#skills" class="px-4 py-2 font-mono text-sm hover:text-electric transition-colors duration-300 hover:bg-electric hover:bg-opacity-10 rounded border border-transparent hover:border-electric">[SKILLS]</a>
+                    <a href="#projects" class="px-4 py-2 font-mono text-sm hover:text-electric transition-colors duration-300 hover:bg-electric hover:bg-opacity-10 rounded border border-transparent hover:border-electric">[PROJECTS]</a>
+                    <a href="#startup" class="px-4 py-2 font-mono text-sm hover:text-electric transition-colors duration-300 hover:bg-electric hover:bg-opacity-10 rounded border border-transparent hover:border-electric">[AGENCY]</a>
+                    <a href="#contact" class="px-4 py-2 font-mono text-sm hover:text-electric transition-colors duration-300 hover:bg-electric hover:bg-opacity-10 rounded border border-transparent hover:border-electric">[CONTACT]</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-cyan">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden terminal-text">
+                    <div class="w-6 h-6 relative">
+                        <span class="block absolute h-0.5 w-full bg-electric transform transition duration-300"
+                              :class="{'rotate-45 translate-y-2': mobileMenuOpen, 'translate-y-0': !mobileMenuOpen}"></span>
+                        <span class="block absolute h-0.5 w-full bg-electric transform transition duration-300 translate-y-2"
+                              :class="{'opacity-0': mobileMenuOpen, 'opacity-100': !mobileMenuOpen}"></span>
+                        <span class="block absolute h-0.5 w-full bg-electric transform transition duration-300 translate-y-4"
+                              :class="{'-rotate-45 -translate-y-2': mobileMenuOpen, 'translate-y-0': !mobileMenuOpen}"></span>
+                    </div>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Menu -->
-        <div x-show="mobileMenuOpen" x-transition class="md:hidden glass-card border-t border-white/10">
-            <div class="px-4 py-4 space-y-3">
-                <a href="#hero" class="block hover:text-cyan transition-colors duration-300">Home</a>
-                <a href="#about" class="block hover:text-cyan transition-colors duration-300">About</a>
-                <a href="#skills" class="block hover:text-cyan transition-colors duration-300">Skills</a>
-                <a href="#projects" class="block hover:text-cyan transition-colors duration-300">Projects</a>
-                <a href="#startup" class="block hover:text-cyan transition-colors duration-300">Startup</a>
-                <a href="#contact" class="block hover:text-cyan transition-colors duration-300">Contact</a>
+        <div x-show="mobileMenuOpen" x-transition class="md:hidden holographic border-t border-electric">
+            <div class="px-6 py-6 space-y-4">
+                <a href="#hero" class="block font-mono text-sm terminal-text hover:text-white transition-colors">[HOME]</a>
+                <a href="#about" class="block font-mono text-sm terminal-text hover:text-white transition-colors">[ABOUT]</a>
+                <a href="#skills" class="block font-mono text-sm terminal-text hover:text-white transition-colors">[SKILLS]</a>
+                <a href="#projects" class="block font-mono text-sm terminal-text hover:text-white transition-colors">[PROJECTS]</a>
+                <a href="#startup" class="block font-mono text-sm terminal-text hover:text-white transition-colors">[AGENCY]</a>
+                <a href="#contact" class="block font-mono text-sm terminal-text hover:text-white transition-colors">[CONTACT]</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen geometric-bg flex items-center justify-center relative">
-        <div class="floating-shapes">
-            <div class="shape shape-1"></div>
-            <div class="shape shape-2"></div>
-            <div class="shape shape-3"></div>
+    <section id="hero" class="min-h-screen relative flex items-center overflow-hidden">
+        <!-- Subtle Background Elements -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-20 left-10 w-24 h-24 border border-gray-500 animate-pulse opacity-10"></div>
+            <div class="absolute bottom-40 right-20 w-16 h-16 bg-gray-600 opacity-5"></div>
+            <div class="absolute top-1/2 left-1/4 w-8 h-8 bg-gray-400 opacity-10" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%)"></div>
         </div>
         
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center">
-                <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s">
-                    <h1 class="font-space text-5xl md:text-7xl font-bold mb-6">
-                        Hi, I'm <span class="text-cyan animate-glow">David</span>
-                    </h1>
-                    <div class="font-space text-2xl md:text-4xl mb-8 text-warm-yellow">
-                        Backend Developer & <span class="text-soft-purple">Startup Founder</span>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid lg:grid-cols-12 gap-8 items-center min-h-screen py-20">
+                <!-- Left Side - Text Content -->
+                <div class="lg:col-span-7 space-y-8">
+                    <!-- Status Bar -->
+                    <div class="font-mono text-xs text-gray-400 opacity-60 animate-text-reveal" style="animation-delay: 0.2s;">
+                        > STATUS: ONLINE | MODE: CREATIVE | LOCATION: BUILDING_THE_FUTURE
+                    </div>
+                    
+                    <!-- Main Heading -->
+                    <div class="space-y-6">
+                        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black leading-none">
+                            <div class="animate-text-reveal" style="animation-delay: 0.4s;">
+                                <span class="text-white">DAVID</span>
+                            </div>
+                            <div class="text-electric animate-text-reveal" style="animation-delay: 0.6s;">
+                                ENEASATO
+                            </div>
+                        </h1>
+                        
+                        <!-- Subtitle with typing effect -->
+                        <div class="text-lg md:text-xl font-mono text-gray-300 animate-text-reveal" style="animation-delay: 0.8s;">
+                            <span class="text-gray-400">[</span>
+                            BACKEND DEVELOPER 
+                            <span class="text-gray-500">&amp;&amp;</span> 
+                            STARTUP FOUNDER
+                            <span class="text-gray-400">]</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Description -->
+                    <p class="text-lg md:text-xl text-gray-400 max-w-2xl leading-relaxed animate-text-reveal" style="animation-delay: 1s;">
+                        I architect <span class="text-white font-semibold">robust backend systems</span> with Django & Python 
+                        while building <span class="text-gray-200 font-semibold">innovative startups</span> that solve real-world problems.
+                    </p>
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 animate-text-reveal" style="animation-delay: 1.2s;">
+                        <a href="#projects" class="group relative inline-flex items-center px-8 py-4 bg-black border-2 border-white hover:bg-white hover:text-black transition-all duration-300 font-mono font-bold text-white magnetic-field">
+                            <span class="relative z-10">VIEW_PROJECTS()</span>
+                            <div class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                        </a>
+                        <a href="#contact" class="group relative inline-flex items-center px-8 py-4 bg-black border-2 border-gray-400 hover:bg-gray-400 hover:text-black transition-all duration-300 font-mono font-bold text-gray-400 magnetic-field">
+                            <span class="relative z-10">INIT_CONTACT()</span>
+                            <div class="absolute inset-0 bg-gray-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
+                        </a>
+                    </div>
+                    
+                    <!-- Stats Row -->
+                    <div class="grid grid-cols-3 gap-8 pt-8 animate-text-reveal" style="animation-delay: 1.4s;">
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-white font-mono">2+</div>
+                            <div class="text-xs font-mono text-gray-500 uppercase tracking-wider">Years_Coding</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-gray-300 font-mono">6+</div>
+                            <div class="text-xs font-mono text-gray-500 uppercase tracking-wider">Projects_Built</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-black text-gray-400 font-mono">∞</div>
+                            <div class="text-xs font-mono text-gray-500 uppercase tracking-wider">Ideas_Generated</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="animate-slide-up opacity-0" style="animation-delay: 0.4s">
-                    <p class="text-lg md:text-xl mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
-                        I craft robust backend solutions with Django and Python, while building innovative startups 
-                        that solve real-world problems. Welcome to my digital universe.
-                    </p>
-                </div>
-                
-                <div class="animate-slide-up opacity-0" style="animation-delay: 0.6s">
-                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                        <a href="#projects" class="magnetic-btn bg-cyan text-navy px-8 py-4 rounded-full font-semibold text-lg hover:bg-warm-yellow transition-all duration-300">
-                            View My Work
-                        </a>
-                        <a href="#contact" class="magnetic-btn border-2 border-cyan text-cyan px-8 py-4 rounded-full font-semibold text-lg hover:bg-cyan hover:text-navy transition-all duration-300">
-                            Get In Touch
-                        </a>
+                <!-- Right Side - Visual Element -->
+                <div class="lg:col-span-5 relative animate-slide-diagonal" style="animation-delay: 0.8s;">
+                    <div class="relative">
+                        <!-- Main Image Container -->
+                        <div class="relative">
+                            <div class="relative">
+                                <div class="holographic p-1 rounded-2xl border border-gray-600">
+                                    <img src="pic of myself.jpg" alt="David Chibueze Eneasato" 
+                                         class="w-full h-96 md:h-[500px] object-cover rounded-xl">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Code Snippets -->
+                        <div class="absolute -top-8 -left-8 holographic p-4 rounded-lg animate-float-slow font-mono text-xs text-gray-400 border border-gray-700">
+                            <div>def build_future():</div>
+                            <div class="ml-4">return "innovation"</div>
+                        </div>
+                        
+                        <div class="absolute -bottom-8 -right-8 holographic p-4 rounded-lg animate-float-slow font-mono text-xs text-gray-400 border border-gray-700" style="animation-delay: 2s;">
+                            <div>class Developer:</div>
+                            <div class="ml-4">passion = "unlimited"</div>
+                        </div>
+                        
+                        <!-- Decorative Elements -->
+                        <div class="absolute top-4 right-4 w-6 h-6 border border-gray-500 opacity-20"></div>
+                        <div class="absolute bottom-4 left-4 w-4 h-4 bg-gray-500 opacity-30"></div>
                     </div>
                 </div>
             </div>
         </div>
-
+        
         <!-- Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <div class="w-6 h-10 border-2 border-cyan rounded-full flex justify-center">
-                <div class="w-1 h-3 bg-cyan rounded-full mt-2 animate-pulse"></div>
+            <div class="w-6 h-12 border-2 border-gray-400 rounded-full flex justify-center">
+                <div class="w-1 h-4 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
             </div>
         </div>
     </section>
@@ -244,53 +397,125 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-16 items-center">
                 <div class="animate-slide-in-left opacity-0">
-                    <h2 class="font-space text-4xl md:text-5xl font-bold mb-8 text-cyan">About Me</h2>
+                    <div class="font-mono text-gray-400 text-sm mb-4">&gt; ABOUT_ME.exe</div>
+                    <h2 class="text-4xl md:text-6xl font-black mb-8">
+                        <span class="text-white">WHO AM I?</span>
+                    </h2>
                     <div class="space-y-6 text-lg leading-relaxed">
-                        <p>
-                            Hi, I'm David Chibueze Eneasato — a backend developer passionate about building web solutions that solve real problems.
-                        </p>
-                        <p>
-                            I specialize in building robust and scalable web applications using Django, Python, while also having a working knowledge of HTML, CSS, and JavaScript. I enjoy collaborating with teams and individuals to bring ideas to life — whether it's tracking evangelism efforts, building tools for students, or helping businesses establish their online presence.
-                        </p>
-                        <p>
-                            I'm the founder of Quantum Leap, a development agency focused on helping people and businesses build websites and web apps that truly make an impact. We're just starting out though
-                        </p>
-                        <p>
-                            Beyond code, I value creativity, clarity, and purpose in everything I do. Whether it's solving technical challenges or exploring new ways to present content beautifully, I strive to merge function with creativity.
-                        </p>
+                        <div class="holographic p-6 rounded-lg border border-gray-600">
+                            <div class="font-mono text-gray-400 text-sm mb-4">// Personal Introduction</div>
+                            <p class="text-gray-300">
+                                Hi, I'm <span class="text-white font-bold">David Chibueze Eneasato</span> — a backend developer 
+                                passionate about building web solutions that solve real problems. I live in the intersection of 
+                                <span class="text-electric">code</span> and <span class="text-gray-300">creativity</span>.
+                            </p>
+                        </div>
+                        
+                        <div class="holographic p-6 rounded-lg border border-gray-500">
+                            <div class="font-mono text-gray-400 text-sm mb-4">// Technical Expertise</div>
+                            <p class="text-gray-300">
+                                I specialize in building <span class="text-white font-semibold">robust and scalable web applications</span> 
+                                using Django, Python, while also having working knowledge of HTML, CSS, and JavaScript. 
+                                I collaborate with teams to bring ideas to life — from tracking evangelism efforts to building student tools.
+                            </p>
+                        </div>
+                        
+                        <div class="holographic p-6 rounded-lg border border-gray-500">
+                            <div class="font-mono text-gray-400 text-sm mb-4">// Entrepreneurial Journey</div>
+                            <p class="text-gray-300">
+                                I'm the founder of <span class="text-white font-bold">Quantum Leap</span>, a development agency 
+                                focused on helping people and businesses build websites and web apps that truly make an impact. 
+                                We're just starting out, but the vision is <span class="text-gray-200">unlimited</span>.
+                            </p>
+                        </div>
+                        
+                        <div class="holographic p-6 rounded-lg border border-gray-500">
+                            <div class="font-mono text-gray-400 text-sm mb-4">// Core Values</div>
+                            <p class="text-gray-300">
+                                Beyond code, I value <span class="text-white font-semibold">creativity, clarity, and purpose</span> in everything I do. 
+                                Whether solving technical challenges or exploring new ways to present content beautifully, 
+                                I strive to merge function with artistry.
+                            </p>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="animate-slide-in-right opacity-0">
-                    <div class="relative">
-                        <!-- Profile Image -->
-                        <div class="glass-card p-4 rounded-3xl mb-8">
-                            <div class="relative overflow-hidden rounded-2xl">
-                                <img src="pic of myself.jpg" alt="David Chibueze Eneasato" class="w-full h-80 md:h-96 object-cover object-center">
-                                <div class="absolute inset-0 bg-gradient-to-t from-navy/20 to-transparent"></div>
+                    <div class="space-y-8">
+                        <!-- Terminal Skills Display -->
+                        <div class="holographic p-6 rounded-lg border border-gray-600">
+                            <div class="font-mono text-gray-400 text-sm mb-6">// SKILL_MATRIX.json</div>
+                            <div class="space-y-4 font-mono text-sm">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">"django":</span>
+                                    <div class="flex space-x-1">
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">"python":</span>
+                                    <div class="flex space-x-1">
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-electric"></div>
+                                        <div class="w-3 h-3 bg-gray-600"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">"postgresql":</span>
+                                    <div class="flex space-x-1">
+                                        <div class="w-3 h-3 bg-gray-300"></div>
+                                        <div class="w-3 h-3 bg-gray-300"></div>
+                                        <div class="w-3 h-3 bg-gray-300"></div>
+                                        <div class="w-3 h-3 bg-gray-600"></div>
+                                        <div class="w-3 h-3 bg-gray-600"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">"javascript":</span>
+                                    <div class="flex space-x-1">
+                                        <div class="w-3 h-3 bg-gray-400"></div>
+                                        <div class="w-3 h-3 bg-gray-400"></div>
+                                        <div class="w-3 h-3 bg-gray-400"></div>
+                                        <div class="w-3 h-3 bg-gray-600"></div>
+                                        <div class="w-3 h-3 bg-gray-600"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-400">"creativity":</span>
+                                    <div class="flex space-x-1">
+                                        <div class="w-3 h-3 bg-white animate-pulse"></div>
+                                        <div class="w-3 h-3 bg-white animate-pulse"></div>
+                                        <div class="w-3 h-3 bg-white animate-pulse"></div>
+                                        <div class="w-3 h-3 bg-white animate-pulse"></div>
+                                        <div class="w-3 h-3 bg-white animate-pulse"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                
                         
-                        <!-- Stats Grid -->
-                        <div class="glass-card p-8 rounded-3xl">
-                            <div class="grid grid-cols-2 gap-6">
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-cyan mb-2">2+</div>
-                                    <div class="text-sm opacity-80">Years Experience</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-warm-yellow mb-2">6+</div>
-                                    <div class="text-sm opacity-80">Projects Completed</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-soft-purple mb-2">1</div>
-                                    <div class="text-sm opacity-80">Startup Founded</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-3xl font-bold text-cyan mb-2">∞</div>
-                                    <div class="text-sm opacity-80">Ideas & Counting</div>
-                                </div>
+                        <!-- Live Stats -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="holographic p-4 rounded-lg border border-gray-600 text-center">
+                                <div class="text-2xl font-black text-white font-mono mb-2">ACTIVE</div>
+                                <div class="text-xs font-mono text-gray-500 uppercase">Status</div>
+                            </div>
+                            <div class="holographic p-4 rounded-lg border border-gray-600 text-center">
+                                <div class="text-2xl font-black text-gray-300 font-mono mb-2">24/7</div>
+                                <div class="text-xs font-mono text-gray-500 uppercase">Learning</div>
+                            </div>
+                            <div class="holographic p-4 rounded-lg border border-gray-600 text-center">
+                                <div class="text-2xl font-black text-gray-400 font-mono mb-2">100%</div>
+                                <div class="text-xs font-mono text-gray-500 uppercase">Motivated</div>
+                            </div>
+                            <div class="holographic p-4 rounded-lg border border-gray-600 text-center">
+                                <div class="text-2xl font-black text-gray-500 font-mono mb-2">∞</div>
+                                <div class="text-xs font-mono text-gray-500 uppercase">Potential</div>
                             </div>
                         </div>
                     </div>
