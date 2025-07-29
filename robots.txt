@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://david-eneasato.vercel.app/sitemap.xml
+
+# Disallow any admin or private directories (if any)
+# Disallow: /admin/
+# Disallow: /private/

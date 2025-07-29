@@ -4,6 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Eneasato - Backend Developer & Startup Founder</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Backend Developer & Startup Founder specializing in Django, Python, and modern web applications. Founder of Quantum Leap Agency. Building the future with innovative technology solutions.">
+    <meta name="keywords" content="David Eneasato, Backend Developer, Python Developer, Django, Startup Founder, Quantum Leap Agency, Web Developer, Software Engineer">
+    <meta name="author" content="David Eneasato">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="David Eneasato - Backend Developer & Startup Founder">
+    <meta property="og:description" content="Backend Developer & Startup Founder specializing in Django, Python, and modern web applications. Building innovative technology solutions.">
+    <meta property="og:image" content="https://david-eneasato.vercel.app/pic of myself.jpg">
+    <meta property="og:url" content="https://david-eneasato.vercel.app/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="David Eneasato Portfolio">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="David Eneasato - Backend Developer & Startup Founder">
+    <meta name="twitter:description" content="Backend Developer & Startup Founder specializing in Django, Python, and modern web applications.">
+    <meta name="twitter:image" content="https://david-eneasato.vercel.app/pic of myself.jpg">
+    
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://david-eneasato.vercel.app/">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "David Eneasato",
+      "alternateName": "David Chibueze Eneasato",
+      "description": "Backend Developer & Startup Founder specializing in Django, Python, and modern web applications",
+      "url": "https://david-eneasato.vercel.app/",
+      "image": "https://david-eneasato.vercel.app/pic of myself.jpg",
+      "sameAs": [
+        "https://github.com/PenDatabase",
+        "https://www.linkedin.com/in/david-eneasato-2ba3a42b1/",
+        "https://www.instagram.com/davideneasato/"
+      ],
+      "jobTitle": "Backend Developer & Startup Founder",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Quantum Leap Agency"
+      },
+      "alumniOf": {
+        "@type": "Organization",
+        "name": "Covenant University"
+      },
+      "knowsAbout": [
+        "Django",
+        "Python",
+        "PostgreSQL",
+        "Web Development",
+        "Backend Development",
+        "Software Engineering",
+        "Startup Development"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Nigeria"
+      }
+    }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,6 +130,35 @@
         body {
             background: #000000;
             overflow-x: hidden;
+        }
+        
+        /* Focus styles for accessibility */
+        *:focus {
+            outline: 2px solid #00ff41;
+            outline-offset: 2px;
+        }
+        
+        a:focus, button:focus {
+            outline: 2px solid #00ff41;
+            outline-offset: 2px;
+            background-color: rgba(0, 255, 65, 0.1);
+        }
+        
+        /* Skip to main content link for screen readers */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: #00ff41;
+            color: #000;
+            padding: 8px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 3px;
+        }
+        
+        .skip-link:focus {
+            top: 6px;
         }
         
         .cyber-grid {
@@ -219,6 +311,9 @@
 </head>
 <body class="font-inter text-white bg-black relative" x-data="{ mobileMenuOpen: false, currentSection: 'hero' }">
     
+    <!-- Skip to main content for accessibility -->
+    <a href="#hero" class="skip-link">Skip to main content</a>
+    
     <!-- Cyber Grid Background -->
     <div class="cyber-grid fixed inset-0 z-0"></div>
     
@@ -232,7 +327,7 @@
     </div>
 
     <!-- Futuristic Navigation -->
-    <nav class="fixed top-0 w-full z-50" x-data="{ scrolled: false }" 
+    <nav class="fixed top-0 w-full z-50" role="navigation" aria-label="Main navigation" x-data="{ scrolled: false }" 
          @scroll.window="scrolled = window.pageYOffset > 20">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex justify-between items-center py-6">
@@ -279,7 +374,8 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="min-h-screen relative flex items-center overflow-hidden">
+    <main>
+    <section id="hero" class="min-h-screen relative flex items-center overflow-hidden" role="banner" aria-label="Introduction and hero section">
         <!-- Subtle Background Elements -->
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-20 left-4 md:left-10 w-16 h-16 md:w-24 md:h-24 border border-gray-500 animate-pulse opacity-10"></div>
@@ -359,7 +455,7 @@
                         <div class="relative">
                             <div class="relative">
                                 <div class="holographic p-1 rounded-2xl border border-gray-600">
-                                    <img src="pic of myself.jpg" alt="David Chibueze Eneasato" 
+                                    <img src="pic of myself.jpg" alt="Professional portrait of David Eneasato, Backend Developer and Startup Founder, wearing a casual outfit with a friendly smile" 
                                          class="w-full h-64 sm:h-80 md:h-96 lg:h-[400px] xl:h-[500px] object-cover rounded-xl">
                                 </div>
                             </div>
@@ -393,12 +489,12 @@
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 sm:py-20 relative">
+    <section id="about" class="py-16 sm:py-20 relative" role="region" aria-labelledby="about-heading">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <div class="animate-slide-in-left opacity-0">
                     <div class="font-mono text-gray-400 text-sm mb-4">&gt; ABOUT_ME.exe</div>
-                    <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 sm:mb-8">
+                    <h2 id="about-heading" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 sm:mb-8">
                         <span class="text-white">WHO AM I?</span>
                     </h2>
                     <div class="space-y-4 sm:space-y-6 text-base sm:text-lg leading-relaxed">
@@ -525,10 +621,10 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-16 sm:py-20 bg-slate-900/50">
+    <section id="skills" class="py-16 sm:py-20 bg-slate-900/50" role="region" aria-labelledby="skills-heading">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
-                <h2 class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Technical Arsenal</h2>
+                <h2 id="skills-heading" class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Technical Arsenal</h2>
                 <p class="text-sm sm:text-base lg:text-lg opacity-80 max-w-2xl mx-auto">
                     My toolkit for building scalable, efficient, and innovative solutions
                 </p>
@@ -615,10 +711,10 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-16 sm:py-20 relative z-20">
+    <section id="projects" class="py-16 sm:py-20 relative z-20" role="region" aria-labelledby="projects-heading">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
-                <h2 class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Featured Projects</h2>
+                <h2 id="projects-heading" class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Featured Projects</h2>
                 <p class="text-sm sm:text-base lg:text-lg opacity-80 max-w-2xl mx-auto">
                     A showcase of innovation, creativity, and technical excellence
                 </p>
@@ -628,7 +724,7 @@
                 <!-- FollowUp Buddy -->
                 <div class="project-card glass-card rounded-3xl overflow-hidden hover:border-cyan/50 transition-all duration-500 relative z-30">
                     <div class="relative">
-                        <img src="followup buddy.png" alt="FollowUp Buddy Project" class="w-full h-40 sm:h-48 object-cover">
+                        <img src="followup buddy.png" alt="FollowUp Buddy web application interface showing evangelism and follow-up tracking dashboard with modern UI design" class="w-full h-40 sm:h-48 object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent"></div>
                         <div class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan rounded-lg flex items-center justify-center">
@@ -663,7 +759,7 @@
                 <!-- CU Packages -->
                 <div class="project-card glass-card rounded-3xl overflow-hidden hover:border-cyan/50 transition-all duration-500 relative z-30">
                     <div class="relative">
-                        <img src="cupackages.png" alt="CU Packages Project" class="w-full h-40 sm:h-48 object-cover">
+                        <img src="cupackages.png" alt="CU Packages e-commerce platform interface showing package management system with clean, modern design and user-friendly navigation" class="w-full h-40 sm:h-48 object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent"></div>
                         <div class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-warm-yellow rounded-lg flex items-center justify-center">
@@ -697,7 +793,7 @@
                 <!-- Demo School Website -->
                 <div class="project-card glass-card rounded-3xl overflow-hidden hover:border-cyan/50 transition-all duration-500 relative z-30">
                     <div class="relative">
-                        <img src="demo school img.jpg" alt="Demo School Website" class="w-full h-40 sm:h-48 object-cover">
+                        <img src="demo school img.jpg" alt="Demo school website homepage featuring modern educational interface with student resources, course information, and institutional branding" class="w-full h-40 sm:h-48 object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent"></div>
                         <div class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-soft-purple rounded-lg flex items-center justify-center">
@@ -730,7 +826,7 @@
                 <!-- Demo Event Planner -->
                 <div class="project-card glass-card rounded-3xl overflow-hidden hover:border-cyan/50 transition-all duration-500 relative z-30">
                     <div class="relative">
-                        <img src="demo event planner.png" alt="Event Planner Demo" class="w-full h-40 sm:h-48 object-cover">
+                        <img src="demo event planner.png" alt="Event planner web application interface displaying event management dashboard with calendar integration, booking system, and elegant user interface" class="w-full h-40 sm:h-48 object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-navy/80 via-navy/20 to-transparent"></div>
                         <div class="absolute bottom-3 sm:bottom-4 left-3 sm:left-4">
                             <div class="w-10 h-10 sm:w-12 sm:h-12 bg-cyan rounded-lg flex items-center justify-center">
@@ -764,10 +860,10 @@
     </section>
 
     <!-- Startup Section -->
-    <section id="startup" class="py-16 sm:py-20 bg-gradient-to-br from-slate-900 to-slate-800">
+    <section id="startup" class="py-16 sm:py-20 bg-gradient-to-br from-slate-900 to-slate-800" role="region" aria-labelledby="startup-heading">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
-                <h2 class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Quantum Leap</h2>
+                <h2 id="startup-heading" class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Quantum Leap</h2>
                 <p class="text-sm sm:text-base lg:text-lg opacity-80 max-w-2xl mx-auto">
                     Empowering the next generation of innovators
                 </p>
@@ -823,10 +919,10 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-16 sm:py-20">
+    <section id="contact" class="py-16 sm:py-20" role="region" aria-labelledby="contact-heading">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 sm:mb-16">
-                <h2 class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Let's Connect</h2>
+                <h2 id="contact-heading" class="font-space text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6 text-cyan">Let's Connect</h2>
                 <p class="text-sm sm:text-base lg:text-lg opacity-80 max-w-2xl mx-auto">
                     Ready to collaborate on something amazing? Let's start a conversation.
                 </p>
@@ -898,6 +994,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- Footer -->
     <footer class="py-8 sm:py-12 border-t border-white/10">
